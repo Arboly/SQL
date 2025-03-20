@@ -1,15 +1,15 @@
--- Dodanie kolumny EncryptedEmail do tabeli Employees
+-- Dodanie kolumny EncryptedEmail do tabeli Employees --
 ALTER TABLE Employees ADD COLUMN EncryptedEmail VARBINARY(255);
 
--- Klucz szyfrowania (dla przykładu, w rzeczywistości powinien być przechowywany bezpiecznie)
+-- Klucz szyfrowania (dla przykładu, w rzeczywistości powinien być przechowywany bezpiecznie) --
 SET @encryption_key = 'my_secure_key';
 
--- Szyfrowanie adresu email
+-- Szyfrowanie adresu email --
 UPDATE Employees 
 SET EncryptedEmail = AES_ENCRYPT(Email, @encryption_key) 
 WHERE EmployeeID = 1;
 
--- Deszyfrowanie adresu email
+-- Deszyfrowanie adresu email --
 SELECT EmployeeID, AES_DECRYPT(EncryptedEmail, @encryption_key) AS DecryptedEmail 
 FROM Employees 
 WHERE EmployeeID = 1;
